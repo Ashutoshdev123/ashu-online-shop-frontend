@@ -15,7 +15,7 @@ type ProductProps = {
 const ProductCard = ({ title, price, image }: ProductProps) => {
   return (
     <Card sx={{ maxWidth: 345 }}>
-      <CardMedia component="img" height="180" image={image} alt={title} />
+      <CardMedia component="img" height="400" image={image} alt={title} />
 
       <CardContent>
         <Typography variant="h6">{title}</Typography>
