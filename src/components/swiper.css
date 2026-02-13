@@ -36,20 +36,30 @@
   white-space: nowrap;
 }
 
-/* Mobile responsive */
+/* Mobile responsive - poori image aur text dikhane ke liye */
 @media (max-width: 768px) {
   .homeSwiper {
-    height: 40vh; /* taller on small screens instead of fixed px */
+    height: 55vh; /* zyada height taaki image sahi se dikhe */
     max-height: none;
   }
 
-  /* Keep left-side text visible on mobile (e.g. Smartphones, Starting ₹6,499) */
-  .slide1 {
-    background-position: left center;
+  /* Full image visible - koi crop nahi, saara text dikhega */
+  .slide {
+    background-size: contain;
+    background-position: center;
+    background-color: #f5f5f5; /* letterboxing ke liye light bg */
   }
 
+  /* Big Sale ko bottom-right shift - NO COST EMI, EXCHANGE OFFER ko overlap na kare */
   .slide h2 {
-    font-size: 20px;
-    padding: 8px 20px;
+    top: auto;
+    left: auto;
+    right: 12px;
+    bottom: 12px;
+    transform: none;
+    font-size: 16px;
+    padding: 6px 14px;
+    white-space: nowrap;
+    max-width: none;
   }
 }
