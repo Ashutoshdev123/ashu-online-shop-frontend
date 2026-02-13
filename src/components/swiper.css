@@ -12,6 +12,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 
   background-size: cover; /* ✅ responsive */
   background-position: center;
@@ -40,6 +41,11 @@
   .homeSwiper {
     height: 40vh; /* taller on small screens instead of fixed px */
     max-height: none;
+  }
+
+  /* Keep left-side text visible on mobile (e.g. Smartphones, Starting ₹6,499) */
+  .slide1 {
+    background-position: left center;
   }
 
   .slide h2 {
