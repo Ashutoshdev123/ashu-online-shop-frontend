@@ -1,26 +1,33 @@
-import "./header.css";
-import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
+import { useState } from "react";
+import {
+  AppBar,
+  Box,
+  Container,
+  Toolbar,
+  Typography,
+  IconButton,
+  Menu,
+  MenuItem,
+  Tooltip,
+  Avatar,
+  Button,
+  Select,
+  InputBase,
+} from "@mui/material";
 import AdbIcon from "@mui/icons-material/Adb";
-import { InputBase, Select } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import Enavbar from "../components/navbar";
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import Enavbar from "./navbar";
+import "./header.css";
 
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+// Constants
+const SETTINGS = ["Profile", "Account", "Dashboard", "Logout"];
+const SEARCH_PLACEHOLDER = "Search Amazon.in";
+const CATEGORIES = ["All", "Books", "Electronics"];
 
 function ResponsiveAppBar() {
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
-  );
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -30,11 +37,16 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
 
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setAnchorElUser(null);
+  };
+
   return (
-    <AppBar position="static" className="headerCointer">
+    <AppBar position="static" className="header-container">
       <Container maxWidth="xl">
         <Toolbar disableGutters sx={{ flexWrap: "wrap", gap: 0 }}>
-          {/* Logo - always left, never shrinks */}
+          {/* Logo Section */}
           <Box
             sx={{
               display: "flex",
@@ -48,7 +60,7 @@ function ResponsiveAppBar() {
               variant="h6"
               noWrap
               component="a"
-              href="#app-bar-with-responsive-menu"
+              href="/"
               sx={{
                 display: { xs: "none", md: "flex" },
                 fontFamily: "monospace",
@@ -66,7 +78,7 @@ function ResponsiveAppBar() {
               variant="h5"
               noWrap
               component="a"
-              href="#app-bar-with-responsive-menu"
+              href="/"
               sx={{
                 display: { xs: "flex", md: "none" },
                 alignItems: "center",
@@ -82,9 +94,10 @@ function ResponsiveAppBar() {
             </Typography>
           </Box>
 
-          {/* Spacer - pushes search/avatar to center and right */}
+          {/* Spacer */}
           <Box sx={{ flexGrow: 1, minWidth: 0 }} />
 
+          {/* Desktop Search Box */}
           <Box
             sx={{
               position: { md: "fixed" },
@@ -98,7 +111,6 @@ function ResponsiveAppBar() {
               height: 40,
             }}
           >
-            {/* Category Dropdown */}
             <Select
               defaultValue="All"
               variant="standard"
@@ -110,15 +122,16 @@ function ResponsiveAppBar() {
                 borderRight: "1px solid #ccc",
               }}
             >
-              <MenuItem value="All">All</MenuItem>
-              <MenuItem value="Books">Books</MenuItem>
-              <MenuItem value="Electronics">Electronics</MenuItem>
+              {CATEGORIES.map((cat) => (
+                <MenuItem key={cat} value={cat}>
+                  {cat}
+                </MenuItem>
+              ))}
             </Select>
-
-            {/* Search Input */}
-            <InputBase placeholder="Search Amazon.in" sx={{ flex: 1, px: 2 }} />
-
-            {/* Search Icon */}
+            <InputBase
+              placeholder={SEARCH_PLACEHOLDER}
+              sx={{ flex: 1, px: 2 }}
+            />
             <IconButton
               sx={{
                 backgroundColor: "#febd69",
@@ -131,39 +144,66 @@ function ResponsiveAppBar() {
             </IconButton>
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography sx={{ textAlign: "center" }}>
-                    {setting}
-                  </Typography>
-                </MenuItem>
-              ))}
-            </Menu>
+          {/* Login Button (when logged out) / User Menu (when logged in) */}
+          <Box sx={{ flexGrow: 0, display: "flex", alignItems: "center" }}>
+            {isLoggedIn ? (
+              <>
+                <Tooltip title="Account">
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Avatar
+                      alt="User"
+                      src="/static/images/avatar/2.jpg"
+                      sx={{ width: 32, height: 32 }}
+                    />
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  sx={{ mt: "45px" }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{ vertical: "top", horizontal: "right" }}
+                  transformOrigin={{ vertical: "top", horizontal: "right" }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  {SETTINGS.map((setting) => (
+                    <MenuItem
+                      key={setting}
+                      onClick={
+                        setting === "Logout" ? handleLogout : handleCloseUserMenu
+                      }
+                    >
+                      <Typography sx={{ textAlign: "center" }}>
+                        {setting}
+                      </Typography>
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </>
+            ) : (
+              <Button
+                variant="text"
+                startIcon={<PersonOutlineIcon />}
+                onClick={() => setIsLoggedIn(true)}
+                sx={{
+                  color: "#fff",
+                  textTransform: "none",
+                  fontWeight: 600,
+                  fontSize: { xs: "0.8rem", sm: "0.9rem" },
+                  px: { xs: 1.5, sm: 2 },
+                  py: 0.75,
+                  "&:hover": {
+                    backgroundColor: "rgba(255,255,255,0.08)",
+                  },
+                }}
+              >
+                Login
+              </Button>
+            )}
           </Box>
-              
         </Toolbar>
+
+        {/* Mobile Search Box */}
         <Box
           className="header-search-mobile"
           sx={{
@@ -184,8 +224,10 @@ function ResponsiveAppBar() {
               height: 40,
             }}
           >
-            <InputBase placeholder="Search Amazon.in" sx={{ flex: 1, px: 2 }} />
-
+            <InputBase
+              placeholder={SEARCH_PLACEHOLDER}
+              sx={{ flex: 1, px: 2 }}
+            />
             <IconButton
               sx={{
                 backgroundColor: "#febd69",
@@ -195,16 +237,12 @@ function ResponsiveAppBar() {
             >
               <SearchIcon />
             </IconButton>
-             
-          </Box>   
-         
-        </Box>  
-      
-      </Container>   
-        <Enavbar />   
-          
+          </Box>
+        </Box>
+      </Container>
+      <Enavbar />
     </AppBar>
-   
   );
 }
+
 export default ResponsiveAppBar;

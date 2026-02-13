@@ -2,7 +2,7 @@ import iphone from "./assets/iphone.jpg";
 import samsung from "./assets/samsung.jpg";
 import oneplus from "./assets/oneplus.jpg";
 
-const products = [
+export const products = [
   {
     id: 1,
     title: "iPhone 15",
@@ -22,5 +22,3 @@ const products = [
     image: oneplus,
   },
 ];
-
-export { products };

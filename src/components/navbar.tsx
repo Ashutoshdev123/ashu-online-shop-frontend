@@ -1,127 +1,117 @@
 import { useState } from "react";
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import MenuIcon from '@mui/icons-material/Menu';
-import Button from '@mui/material/Button';
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemButtonText from "@mui/material/ListItemText";
-
 import {
-  Drawer, 
+  Box,
+  Toolbar,
+  IconButton,
+  Typography,
+  Button,
+  Drawer,
   List,
+  ListItemButton,
+  ListItemText,
   Divider,
 } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 
-const pages = ['Mobile', 'TV', 'Laptop','Fashion','Electronics','Home & Kitchen'];
+// Constants
+const MENU_ITEMS = [
+  "Mobile",
+  "TV",
+  "Laptop",
+  "Fashion",
+  "Electronics",
+  "Home & Kitchen",
+];
 
+const DRAWER_SECTIONS = [
+  {
+    title: "Trending",
+    items: ["Best Sellers", "New Releases", "Movers & Shakers"],
+  },
+  {
+    title: "Digital Content and Devices",
+    items: [
+      "Echo & Alexa",
+      "Fire TV",
+      "Kindle E-Readers & eBooks",
+      "Amazon Prime Video",
+    ],
+  },
+];
 
 function Enavbar() {
-  const [open, setOpen] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   return (
-   <Box
-  sx={{
-    backgroundColor: "#232f3e",
-       display: "flex",
-    alignItems: "center",
-    px: 0,
-   
-  }}
->
-
-      <Toolbar
-        disableGutters
-        sx={{
-          minHeight: "40px !important",
-          px: 1,         
-        }}
-      >
+    <Box
+      sx={{
+        backgroundColor: "#232f3e",
+        display: "flex",
+        alignItems: "center",
+        px: 0,
+      }}
+    >
+      <Toolbar disableGutters sx={{ minHeight: "40px !important", px: 1 }}>
         {/* Mobile Menu */}
-        <Box sx={{ display: { xs: "flex"} }}>
+        <Box sx={{ display: { xs: "flex" } }}>
           <IconButton
             size="small"
-            onClick={() => setOpen(true)}
+            onClick={() => setDrawerOpen(true)}
             color="inherit"
           >
             <MenuIcon />
-          </IconButton>       
-          
-          <Drawer
-        anchor="left"
-        open={open}
-        onClose={() => setOpen(false)}
-        ModalProps={{
-          BackdropProps: {
-            sx: { backgroundColor: "rgba(0,0,0,0.6)" }, // page disable
-          },
-        }}      
-      >
-        {/* Header */}
-        <Box
-          sx={{
-            backgroundColor: "#232f3e",
-            color: "#fff",
-            p: 2,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <Typography variant="h6">Hello, Sign in</Typography>
-          <IconButton onClick={() => setOpen(false)}>
-            <CloseIcon sx={{ color: "#fff" }} />
           </IconButton>
-        </Box>
 
-        {/* Menu Content */}
-        <List>
-          <Typography sx={{ px: 2, py: 1, fontWeight: "bold" }}>
-            Trending
-          </Typography>
+          <Drawer
+            anchor="left"
+            open={drawerOpen}
+            onClose={() => setDrawerOpen(false)}
+            ModalProps={{
+              BackdropProps: {
+                sx: { backgroundColor: "rgba(0,0,0,0.6)" },
+              },
+            }}
+          >
+            <Box
+              sx={{
+                backgroundColor: "#232f3e",
+                color: "#fff",
+                p: 2,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <Typography variant="h6">Hello, Sign in</Typography>
+              <IconButton onClick={() => setDrawerOpen(false)}>
+                <CloseIcon sx={{ color: "#fff" }} />
+              </IconButton>
+            </Box>
 
-          <ListItemButton>
-            <ListItemButtonText primary="Best Sellers" />
-          </ListItemButton>
-          <ListItemButton>
-            <ListItemButtonText primary="New Releases" />
-          </ListItemButton>
-          <ListItemButton>
-            <ListItemButtonText primary="Movers & Shakers" />
-          </ListItemButton>
-
-          <Divider />
-
-          <Typography sx={{ px: 2, py: 1, fontWeight: "bold" }}>
-            Digital Content and Devices
-          </Typography>
-
-          <ListItemButton>
-            <ListItemButtonText primary="Echo & Alexa" />
-          </ListItemButton>
-          <ListItemButton>
-            <ListItemButtonText primary="Fire TV" />
-          </ListItemButton>
-          <ListItemButton>
-            <ListItemButtonText primary="Kindle E-Readers & eBooks" />
-          </ListItemButton>
-          <ListItemButton>
-            <ListItemButtonText primary="Amazon Prime Video" />
-          </ListItemButton>
-        </List>
-      </Drawer>
-      
-
-
+            <List>
+              {DRAWER_SECTIONS.map((section, index) => (
+                <Box key={section.title}>
+                  <Typography sx={{ px: 2, py: 1, fontWeight: "bold" }}>
+                    {section.title}
+                  </Typography>
+                  {section.items.map((item) => (
+                    <ListItemButton key={item}>
+                      <ListItemText primary={item} />
+                    </ListItemButton>
+                  ))}
+                  {index < DRAWER_SECTIONS.length - 1 && <Divider />}
+                </Box>
+              ))}
+            </List>
+          </Drawer>
         </Box>
 
         {/* Desktop Menu */}
         <Box sx={{ display: { xs: "none", md: "flex" }, ml: 1 }}>
-          {pages.map((page) => (
+          {MENU_ITEMS.map((item) => (
             <Button
-              key={page}
+              key={item}
               sx={{
                 color: "#fff",
                 fontSize: 13,
@@ -129,7 +119,7 @@ function Enavbar() {
                 px: 1.5,
               }}
             >
-              {page}
+              {item}
             </Button>
           ))}
         </Box>
@@ -137,4 +127,5 @@ function Enavbar() {
     </Box>
   );
 }
+
 export default Enavbar;
