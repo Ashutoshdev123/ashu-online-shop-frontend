@@ -36,18 +36,20 @@
   white-space: nowrap;
 }
 
-/* Mobile responsive - poori image aur text dikhane ke liye */
+/* Mobile responsive - pura image + saara text visible */
 @media (max-width: 768px) {
   .homeSwiper {
-    height: 55vh; /* zyada height taaki image sahi se dikhe */
+    /* Container height banner ratio ke hisaab - image full dikhe */
+    height: 42vw !important;
+    min-height: 200px;
     max-height: none;
   }
 
-  /* Full image visible - koi crop nahi, saara text dikhega */
+  /* contain = pura image, koi crop nahi - saara text dikhega */
   .slide {
     background-size: contain;
     background-position: center;
-    background-color: #f5f5f5; /* letterboxing ke liye light bg */
+    background-color: #f5f5f5;
   }
 
   /* Big Sale ko bottom-right shift - NO COST EMI, EXCHANGE OFFER ko overlap na kare */
