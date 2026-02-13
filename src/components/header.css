@@ -1,5 +1,26 @@
-.headerCointer{
+.headerCointer {
   background-color: #000000ff !important;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
   color: #ffffff !important;
+}
+
+/* Full-width container so logo stays at left edge on large screens */
+.headerCointer .MuiContainer-root {
+  max-width: 100% !important;
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+}
+
+@media (min-width: 600px) {
+  .headerCointer .MuiContainer-root {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+}
+
+@media (min-width: 960px) {
+  .headerCointer .MuiContainer-root {
+    padding-left: 32px !important;
+    padding-right: 32px !important;
+  }
 }

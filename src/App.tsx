@@ -13,12 +13,11 @@ const App = () => {
         <Grid size={12}>
           <SwiperComponent />
         </Grid>
-          {/* product Crad  start  here */}
-  
-        <Grid size={1}></Grid>
+        {/* product Crad  start  here */}
 
-          {products.map((product) => (           
-          <Grid  size ={{ xs: 12, sm: 6, md: 3 }} key={product.id} marginTop={2} >
+        <Grid size={1}></Grid>
+        {products.map((product) => (
+          <Grid size={{ xs: 12, sm: 6, md: 3 }} key={product.id} marginTop={2}>
             <ProductCard
               title={product.title}
               price={product.price}
@@ -27,7 +26,7 @@ const App = () => {
           </Grid>
         ))}
         <Grid size={1}></Grid>
-           {/* product Crad  end  here */}
+        {/* product Crad  end  here */}
       </Grid>
       <Footer />
     </div>
