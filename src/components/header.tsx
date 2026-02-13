@@ -165,10 +165,11 @@ function ResponsiveAppBar() {
               
         </Toolbar>
         <Box
+          className="header-search-mobile"
           sx={{
             display: { xs: "flex", md: "none" },
             width: "100%",
-            px: 1,
+            px: 0,
             py: 1,
             backgroundColor: "#131921",
           }}
@@ -178,7 +179,7 @@ function ResponsiveAppBar() {
               display: "flex",
               alignItems: "center",
               backgroundColor: "white",
-              borderRadius: 1,
+              borderRadius: 0,
               width: "100%",
               height: 40,
             }}
